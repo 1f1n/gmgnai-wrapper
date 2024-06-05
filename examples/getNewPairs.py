@@ -2,6 +2,6 @@ from gmgn import gmgn
 
 gmgn = gmgn()
 
-getTokenInfo = gmgn.getNewPairs(limit=50)
+getNewPairs = gmgn.getNewPairs(limit=50)
 
-print(getTokenInfo)
+print(getNewPairs)
