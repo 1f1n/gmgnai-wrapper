@@ -1,5 +1,5 @@
 <h1 align="center">
-	<img src="https://gmgn.ai/static/favicon2.ico" width="150px"><br>
+	<img src="https://gmgn.ai/static/logo/GMGNLogo.webp" width="150px"><br>
     GMGN.ai Wrapper
 </h1>
 <p align="center">
