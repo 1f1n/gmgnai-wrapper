@@ -46,16 +46,18 @@ class gmgn:
         """
         Gets a list of trending wallets based on a timeframe and a wallet tag.
 
-        Timeframes
-        1d = 1 Day
-        7d = 7 Days
-        30d = 30 days
+        Timeframes\n
+        1d = 1 Day\n
+        7d = 7 Days\n
+        30d = 30 days\n
 
-        Wallet Tags
-        pump_smart = Pump.Fun Smart Money
-        smart_degen = Smart Money
-        reowned = KOL/VC/Influencer
-        snipe_bot = Snipe Bot
+        ----------------
+
+        Wallet Tags\n
+        pump_smart = Pump.Fun Smart Money\n
+        smart_degen = Smart Money\n
+        reowned = KOL/VC/Influencer\n
+        snipe_bot = Snipe Bot\n
 
         """
         if not timeframe:
@@ -75,12 +77,12 @@ class gmgn:
         """
         Gets a list of trending tokens based on a timeframe.
 
-        Timeframes
-        1m = 1 Minute
-        5m = 5 Minutes
-        1h = 1 Hour
-        6h = 6 Hours
-        24h = 24 Hours
+        Timeframes\n
+        1m = 1 Minute\n
+        5m = 5 Minutes\n
+        1h = 1 Hour\n
+        6h = 6 Hours\n
+        24h = 24 Hours\n
         """
         timeframes = ["1m", "5m", "1h", "6h", "24h"]
         if timeframe not in timeframes:
@@ -102,7 +104,7 @@ class gmgn:
 
     def getTokensByCompletion(self, limit: int = None) -> dict:
         """
-        Gets tokens by their bonding curve completion progress.
+        Gets tokens by their bonding curve completion progress.\n
 
         Limit - Limits how many tokens in the response.
         """
@@ -122,7 +124,7 @@ class gmgn:
     
     def findSnipedTokens(self, size: int = None) -> dict:
         """
-        Gets a list of tokens that have been sniped.
+        Gets a list of tokens that have been sniped.\n
 
         Size - The amount of tokens in the response
         """
