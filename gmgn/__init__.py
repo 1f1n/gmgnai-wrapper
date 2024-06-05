@@ -1,1 +1,1 @@
-from .client import gmgn
+from gmgn.client import gmgn
