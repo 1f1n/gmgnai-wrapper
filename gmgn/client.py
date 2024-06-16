@@ -198,3 +198,23 @@ class gmgn:
         jsonResponse = request.json()['data']
 
         return jsonResponse
+    
+    def getWalletInfo(self, walletAddress: str = None, period: str = None) -> dict:
+        """
+        Gets various information about a wallet address.
+
+        Period - 7d, 30d - The timeframe of the wallet you're checking.
+        """
+
+        if not walletAddress:
+            return "You must input a wallet address."
+        if not period:
+            period = "7d"
+        
+        url = f"{self.BASE_URL}/v1/smartmoney/sol/walletNew/{walletAddress}?period={period}"
+
+        request = httpx.get(url, headers=self.headers)
+
+        jsonResponse = request.json()['data']
+
+        return jsonResponse
