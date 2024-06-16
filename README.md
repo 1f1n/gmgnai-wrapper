@@ -5,3 +5,12 @@
 <p align="center">
 	An API wrapper for undocumented endpoints at GMGN.ai<br>NOTE: This is for <b>MY</b> personal use, I do not condone the use of this API for any prohibited reason. :)</br>
 </p>
+```
+from gmgn import gmgn
+
+gmgn = gmgn()
+
+getTokenInfo = gmgn.getTokenInfo(contractAddress="9eLRcHw2G4Ugrnp1p5165PuZsQ2YSc9GnBpGZS7Cpump")
+
+print(getTokenInfo)
+```
