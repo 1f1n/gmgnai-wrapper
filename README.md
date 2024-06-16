@@ -5,7 +5,7 @@
 <p align="center">
 	An API wrapper for undocumented endpoints at GMGN.ai<br>NOTE: This is for <b>MY</b> personal use, I do not condone the use of this API for any prohibited reason. :)</br>
 </p>
-
+Example
 ```python
 from gmgn import gmgn
 
