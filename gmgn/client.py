@@ -206,9 +206,11 @@ class gmgn:
         Period - 7d, 30d - The timeframe of the wallet you're checking.
         """
 
+        periods = ["7d", "30d"]
+
         if not walletAddress:
             return "You must input a wallet address."
-        if not period:
+        if not period or period not in periods:
             period = "7d"
         
         url = f"{self.BASE_URL}/v1/smartmoney/sol/walletNew/{walletAddress}?period={period}"
