@@ -217,4 +217,4 @@ class gmgn:
 
         jsonResponse = request.json()['data']
 
-        return jsonRespons
+        return jsonResponse
