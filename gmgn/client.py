@@ -1,4 +1,4 @@
-import cloudscraper
+import tls_client
 
 # author - 1f1n
 # date - 05/06/2024
@@ -11,7 +11,7 @@ class gmgn:
             "Content-Type": "application/json"
         }
 
-        self.self.httpx = cloudscraper.create_scraper()
+        self.session = tls_client.Session(client_identifier="chrome_103")
 
     def getTokenInfo(self, contractAddress: str) -> dict:
         """
