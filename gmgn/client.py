@@ -1,6 +1,6 @@
-import httpx
+import cloudscraper
 
-# author - 1337fin
+# author - 1f1n
 # date - 05/06/2024
 
 class gmgn:
@@ -11,6 +11,8 @@ class gmgn:
             "Content-Type": "application/json"
         }
 
+        self.self.httpx = cloudscraper.create_scraper()
+
     def getTokenInfo(self, contractAddress: str) -> dict:
         """
         Gets info on a token.
@@ -19,7 +21,7 @@ class gmgn:
             return "You must input a contract address."
         url = f"{self.BASE_URL}/v1/tokens/sol/{contractAddress}"
 
-        request = httpx.get(url, headers=self.headers)
+        request = self.httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']['token']
 
@@ -36,7 +38,7 @@ class gmgn:
         
         url = f"{self.BASE_URL}/v1/pairs/sol/new_pairs?limit={limit}&orderby=open_timestamp&direction=desc&filters[]=not_honeypot"
 
-        request = httpx.get(url, headers=self.headers)
+        request = self.httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
@@ -67,7 +69,7 @@ class gmgn:
         
         url = f"{self.BASE_URL}/v1/rank/sol/wallets/{timeframe}?tag={walletTag}&orderby=pnl_{timeframe}&direction=desc"
 
-        request = httpx.get(url, headers=self.headers)
+        request = self.httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
@@ -96,7 +98,7 @@ class gmgn:
         else:
             url = f"{self.BASE_URL}/v1/rank/sol/swaps/{timeframe}?orderby=swaps&direction=desc"
         
-        request = httpx.get(url, headers=self.headers)
+        request = self.httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
@@ -116,7 +118,7 @@ class gmgn:
 
         url = f"{self.BASE_URL}/v1/rank/sol/pump?limit={limit}&orderby=progress&direction=desc&pump=true"
 
-        request = httpx.get(url, headers=self.headers)
+        request = self.httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
@@ -136,7 +138,7 @@ class gmgn:
         
         url = f"{self.BASE_URL}/v1/signals/sol/snipe_new?size={size}&is_show_alert=false&featured=false"
 
-        request = httpx.get(url, headers=self.headers)
+        request = self.httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
@@ -148,7 +150,7 @@ class gmgn:
         """
         url = f"{self.BASE_URL}/v1/chains/sol/gas_price"
 
-        request = httpx.get(url, headers=self.headers)
+        request = self.httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
@@ -163,7 +165,7 @@ class gmgn:
         
         url = f"{self.BASE_URL}/v1/sol/tokens/realtime_token_price?address={contractAddress}"
 
-        request = httpx.get(url, headers=self.headers)
+        request = self.httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
@@ -178,7 +180,7 @@ class gmgn:
         
         url = f"{self.BASE_URL}/v1/tokens/top_buyers/sol/{contractAddress}"
 
-        request = httpx.get(url, headers=self.headers)
+        request = self.httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
@@ -193,7 +195,7 @@ class gmgn:
         
         url = f"{self.BASE_URL}/v1/tokens/security/sol/{contractAddress}"
 
-        request = httpx.get(url, headers=self.headers)
+        request = self.httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
@@ -215,7 +217,7 @@ class gmgn:
         
         url = f"{self.BASE_URL}/v1/smartmoney/sol/walletNew/{walletAddress}?period={period}"
 
-        request = httpx.get(url, headers=self.headers)
+        request = self.httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
