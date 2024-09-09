@@ -2,6 +2,11 @@
 	<img src="https://gmgn.ai/static/logo/GMGNLogo.webp" width="150px"><br>
     GMGN.ai Wrapper
 </h1>
+Note
+</h1>
+<p align="center">
+	<b>Permanent gmgn.ai API backdoor/bypass available (no 403/cloudflare), DM me on Discord for more info: @f.in</b>
+</p>
 <p align="center">
 	An API wrapper for undocumented endpoints at GMGN.ai<br>NOTE: This is for <b>MY</b> personal use, I do not condone the use of this API for any prohibited reason. :)</br>
 </p>
