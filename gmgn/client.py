@@ -51,7 +51,7 @@ class gmgn:
 
         request = self.sendRequest.get(url, headers=self.headers)
 
-        jsonResponse = request.json()['data']['token']
+        jsonResponse = request.json()['dataa']['token']
 
         return jsonResponse
     
