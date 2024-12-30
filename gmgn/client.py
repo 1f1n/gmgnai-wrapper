@@ -1,5 +1,5 @@
-import tls_client
 import random
+import tls_client
 from fake_useragent import UserAgent
 
 # author - 1f1n
@@ -11,7 +11,7 @@ class gmgn:
     def __init__(self):
         pass
 
-    def randomiseHeaders(self):
+    def randomiseRequest(self):
         self.identifier = random.choice([browser for browser in tls_client.settings.ClientIdentifiers.__args__ if browser.startswith(('chrome', 'safari', 'firefox', 'opera'))])
         self.sendRequest = tls_client.Session(random_tls_extension_order=True, client_identifier=self.identifier)
 
@@ -44,14 +44,14 @@ class gmgn:
         """
         Gets info on a token.
         """
-
+        self.randomiseRequest()
         if not contractAddress:
             return "You must input a contract address."
         url = f"{self.BASE_URL}/v1/tokens/sol/{contractAddress}"
 
         request = self.sendRequest.get(url, headers=self.headers)
 
-        jsonResponse = request.json()['data']['token']
+        jsonResponse = request.json()
 
         return jsonResponse
     
@@ -59,6 +59,7 @@ class gmgn:
         """
         Limit - Limits how many tokens are in the response.
         """
+        self.randomiseRequest()
         if not limit:
             limit = 50
         elif limit > 50:
@@ -90,6 +91,7 @@ class gmgn:
         snipe_bot = Snipe Bot\n
 
         """
+        self.randomiseRequest()
         if not timeframe:
             timeframe = "7d"
         if not walletTag:
@@ -115,6 +117,7 @@ class gmgn:
         24h = 24 Hours\n
         """
         timeframes = ["1m", "5m", "1h", "6h", "24h"]
+        self.randomiseRequest()
         if timeframe not in timeframes:
             return "Not a valid timeframe."
 
@@ -138,7 +141,7 @@ class gmgn:
 
         Limit - Limits how many tokens in the response.
         """
-
+        self.randomiseRequest()
         if not limit:
             limit = 50
         elif limit > 50:
@@ -158,7 +161,7 @@ class gmgn:
 
         Size - The amount of tokens in the response
         """
-
+        self.randomiseRequest()
         if not size:
             size = 10
         elif size > 39:
@@ -171,11 +174,12 @@ class gmgn:
         jsonResponse = request.json()['data']
 
         return jsonResponse
-    
+
     def getGasFee(self):
         """
         Get the current gas fee price.
         """
+        self.randomiseRequest()
         url = f"{self.BASE_URL}/v1/chains/sol/gas_price"
 
         request = self.sendRequest.get(url, headers=self.headers)
@@ -188,6 +192,7 @@ class gmgn:
         """
         Get the realtime USD price of the token.
         """
+        self.randomiseRequest()
         if not contractAddress:
             return "You must input a contract address."
         
@@ -203,6 +208,7 @@ class gmgn:
         """
         Get the top buyers of a token.
         """
+        self.randomiseRequest()
         if not contractAddress:
             return "You must input a contract address."
         
@@ -218,6 +224,7 @@ class gmgn:
         """
         Gets security info about the token.
         """
+        self.randomiseRequest()
         if not contractAddress:
             return "You must input a contract address."
         
@@ -235,7 +242,7 @@ class gmgn:
 
         Period - 7d, 30d - The timeframe of the wallet you're checking.
         """
-
+        self.randomiseRequest()
         periods = ["7d", "30d"]
 
         if not walletAddress:
