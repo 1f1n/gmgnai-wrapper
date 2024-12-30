@@ -1,6 +1,4 @@
-import tls_client
-import random
-from fake_useragent import UserAgent
+import httpx
 
 # author - 1f1n
 # date - 05/06/2024
@@ -13,35 +11,6 @@ class gmgn:
             "Content-Type": "application/json"
         }
 
-    def randomiseHeaders(self):
-        self.identifier = random.choice([browser for browser in tls_client.settings.ClientIdentifiers.__args__ if browser.startswith(('chrome', 'safari', 'firefox', 'opera'))])
-        self.sendRequest = tls_client.Session(random_tls_extension_order=True, client_identifier=self.identifier)
-
-        parts = self.identifier.split('_')
-        identifier, version, *rest = parts
-        other = rest[0] if rest else None
-
-        os = 'windows'
-        if identifier == 'opera':
-            identifier = 'chrome'
-        elif version == 'ios':
-            os = 'ios'
-        else:
-            os = 'windows'
-
-        self.user_agent = UserAgent(browsers=[identifier], os=[os]).random
-
-        self.headers = {
-            'Host': 'gmgn.ai',
-            'accept': 'application/json, text/plain, */*',
-            'accept-language': 'fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7',
-            'dnt': '1',
-            'priority': 'u=1, i',
-            'referer': 'https://gmgn.ai/?chain=sol',
-            'user-agent': self.user_agent
-        }
-        
-
     def getTokenInfo(self, contractAddress: str) -> dict:
         """
         Gets info on a token.
@@ -51,7 +20,7 @@ class gmgn:
             return "You must input a contract address."
         url = f"{self.BASE_URL}/v1/tokens/sol/{contractAddress}"
 
-        request = self.sendRequest.get(url, headers=self.headers)
+        request = httpx.get(url, headers=self.headers)
 
         #jsonResponse = request.json()['data']['token']
 
@@ -68,7 +37,7 @@ class gmgn:
         
         url = f"{self.BASE_URL}/v1/pairs/sol/new_pairs?limit={limit}&orderby=open_timestamp&direction=desc&filters[]=not_honeypot"
 
-        request = self.sendRequest.get(url, headers=self.headers)
+        request = httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
@@ -99,7 +68,7 @@ class gmgn:
         
         url = f"{self.BASE_URL}/v1/rank/sol/wallets/{timeframe}?tag={walletTag}&orderby=pnl_{timeframe}&direction=desc"
 
-        request = self.sendRequest.get(url, headers=self.headers)
+        request = httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
@@ -128,7 +97,7 @@ class gmgn:
         else:
             url = f"{self.BASE_URL}/v1/rank/sol/swaps/{timeframe}?orderby=swaps&direction=desc"
         
-        request = self.sendRequest.get(url, headers=self.headers)
+        request = httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
@@ -148,7 +117,7 @@ class gmgn:
 
         url = f"{self.BASE_URL}/v1/rank/sol/pump?limit={limit}&orderby=progress&direction=desc&pump=true"
 
-        request = self.sendRequest.get(url, headers=self.headers)
+        request = httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
@@ -168,7 +137,7 @@ class gmgn:
         
         url = f"{self.BASE_URL}/v1/signals/sol/snipe_new?size={size}&is_show_alert=false&featured=false"
 
-        request = self.sendRequest.get(url, headers=self.headers)
+        request = httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
@@ -180,7 +149,7 @@ class gmgn:
         """
         url = f"{self.BASE_URL}/v1/chains/sol/gas_price"
 
-        request = self.sendRequest.get(url, headers=self.headers)
+        request = httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
@@ -195,7 +164,7 @@ class gmgn:
         
         url = f"{self.BASE_URL}/v1/sol/tokens/realtime_token_price?address={contractAddress}"
 
-        request = self.sendRequest.get(url, headers=self.headers)
+        request = httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
@@ -210,7 +179,7 @@ class gmgn:
         
         url = f"{self.BASE_URL}/v1/tokens/top_buyers/sol/{contractAddress}"
 
-        request = self.sendRequest.get(url, headers=self.headers)
+        request = httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
@@ -225,7 +194,7 @@ class gmgn:
         
         url = f"{self.BASE_URL}/v1/tokens/security/sol/{contractAddress}"
 
-        request = self.sendRequest.get(url, headers=self.headers)
+        request = httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
@@ -247,7 +216,7 @@ class gmgn:
         
         url = f"{self.BASE_URL}/v1/smartmoney/sol/walletNew/{walletAddress}?period={period}"
 
-        request = self.sendRequest.get(url, headers=self.headers)
+        request = httpx.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
 
