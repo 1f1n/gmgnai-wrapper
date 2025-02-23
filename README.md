@@ -4,7 +4,8 @@
 </h1>
 <p align="center">
 	An API wrapper for undocumented endpoints at GMGN.ai<br>NOTE: This is for <b>MY</b> personal use, I do not condone the use of this API for any prohibited reason. :)</br>
-</p>
+</p><br>
+<p align="center"><b>Note, the GMGN.ai domain is cloudflare protected,<br> meaning some requests will fail to get access to an unprotected endpoint <br>DM me on Discord<br>@f.in</b></p>
 <b>Example, for more examples go <a href="https://github.com/1f1n/gmgnai-wrapper/tree/main/examples">here</a></b><br><br>
 
 ```python
