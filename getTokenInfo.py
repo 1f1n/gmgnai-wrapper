@@ -2,6 +2,6 @@ from gmgn import gmgn
 
 gmgn = gmgn()
 
-getTokenInfo = gmgn.getTokenInfo(contractAddress="9eLRcHw2G4Ugrnp1p5165PuZsQ2YSc9GnBpGZS7Cpump")
+getTokenInfo = gmgn.getTokenInfo("QFp94pu1bbUq3o2Qz1PhH8SmZVtRQ9Y2LSxeadYpump")
 
 print(getTokenInfo)

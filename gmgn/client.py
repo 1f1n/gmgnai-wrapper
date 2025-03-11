@@ -18,16 +18,16 @@ class gmgn:
         parts = self.identifier.split('_')
         identifier, version, *rest = parts
         other = rest[0] if rest else None
-
-        os = 'windows'
+        
+        os = 'Windows'
         if identifier == 'opera':
             identifier = 'chrome'
-        elif version == 'ios':
-            os = 'ios'
+        elif version == 'iOS':
+            os = 'iOS'
         else:
-            os = 'windows'
+            os = 'Windows'
 
-        self.user_agent = UserAgent(browsers=[identifier], os=[os]).random
+        self.user_agent = UserAgent(browsers=[identifier.title()], os=[os]).random
 
         self.headers = {
             'Host': 'gmgn.ai',
@@ -118,11 +118,12 @@ class gmgn:
         """
         timeframes = ["1m", "5m", "1h", "6h", "24h"]
         self.randomiseRequest()
-        if timeframe not in timeframes:
-            return "Not a valid timeframe."
-
+        
         if not timeframe:
             timeframe = "1h"
+
+        if timeframe not in timeframes:
+            return "Not a valid timeframe."
 
         if timeframe == "1m":
             url = f"{self.BASE_URL}/v1/rank/sol/swaps/{timeframe}?orderby=swaps&direction=desc&limit=20"
@@ -243,7 +244,7 @@ class gmgn:
         Period - 7d, 30d - The timeframe of the wallet you're checking.
         """
         self.randomiseRequest()
-        periods = ["7d", "30d"]
+        periods = ["1d", "7d", "30d"]
 
         if not walletAddress:
             return "You must input a wallet address."
@@ -257,3 +258,23 @@ class gmgn:
         jsonResponse = request.json()['data']
 
         return jsonResponse
+    
+    def getWalletTokenDistribution(self, walletAddress: str = None, period: str = None) -> dict:
+        """
+        Get the distribution of ROI on tokens traded by the wallet address
+        """
+        self.randomiseRequest()
+        periods = ["1d", "7d", "30d"]
+
+        if not walletAddress:
+            return "You must input a wallet address."
+        if not period or period not in periods:
+            period = "7d"
+
+        url = f"{self.BASE_URL}/v1/rank/sol/wallets/{walletAddress}/unique_token_7d?interval={period}"
+        request = self.sendRequest.get(url, headers=self.headers)
+
+        jsonResponse = request.json()['data']
+
+        return jsonResponse
+    
