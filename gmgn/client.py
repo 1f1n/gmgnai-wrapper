@@ -6,7 +6,7 @@ from fake_useragent import UserAgent
 # date - 05/06/2024
 
 class gmgn:
-    BASE_URL = "https://gmgn.ai/defi/quotation"
+    BASE_URL = "https://gmgn.ai"
 
     def __init__(self):
         pass
@@ -43,6 +43,7 @@ class gmgn:
             'dnt': '1',
             'priority': 'u=1, i',
             'referer': 'https://gmgn.ai/?chain=sol',
+            'content-type': 'application/json',
             'user-agent': self.user_agent
         }
         
@@ -54,9 +55,14 @@ class gmgn:
         self.randomiseRequest()
         if not contractAddress:
             return "You must input a contract address."
-        url = f"{self.BASE_URL}/v1/tokens/sol/{contractAddress}"
+        url = f"{self.BASE_URL}/api/v1/mutil_window_token_info"
 
-        request = self.sendRequest.get(url, headers=self.headers)
+        payload ={
+            "chain":"sol",
+            "addresses":[contractAddress]
+        }
+
+        request = self.sendRequest.post(url, json=payload, headers=self.headers)
 
         jsonResponse = request.json()
 
@@ -72,7 +78,7 @@ class gmgn:
         elif limit > 50:
             return "You cannot have more than check more than 50 pairs."
         
-        url = f"{self.BASE_URL}/v1/pairs/sol/new_pairs?limit={limit}&orderby=open_timestamp&direction=desc&filters[]=not_honeypot"
+        url = f"{self.BASE_URL}/defi/quotation/v1/pairs/sol/new_pairs?limit={limit}&orderby=open_timestamp&direction=desc&filters[]=not_honeypot"
 
         request = self.sendRequest.get(url, headers=self.headers)
 
@@ -104,7 +110,7 @@ class gmgn:
         if not walletTag:
             walletTag = "smart_degen"
         
-        url = f"{self.BASE_URL}/v1/rank/sol/wallets/{timeframe}?tag={walletTag}&orderby=pnl_{timeframe}&direction=desc"
+        url = f"{self.BASE_URL}/defi/quotation/v1/rank/sol/wallets/{timeframe}?tag={walletTag}&orderby=pnl_{timeframe}&direction=desc"
 
         request = self.sendRequest.get(url, headers=self.headers)
 
@@ -133,50 +139,10 @@ class gmgn:
             return "Not a valid timeframe."
 
         if timeframe == "1m":
-            url = f"{self.BASE_URL}/v1/rank/sol/swaps/{timeframe}?orderby=swaps&direction=desc&limit=20"
+            url = f"{self.BASE_URL}/defi/quotation/v1/rank/sol/swaps/{timeframe}?orderby=swaps&direction=desc&limit=20"
         else:
-            url = f"{self.BASE_URL}/v1/rank/sol/swaps/{timeframe}?orderby=swaps&direction=desc"
+            url = f"{self.BASE_URL}/defi/quotation/v1/rank/sol/swaps/{timeframe}?orderby=swaps&direction=desc"
         
-        request = self.sendRequest.get(url, headers=self.headers)
-
-        jsonResponse = request.json()['data']
-
-        return jsonResponse
-
-    def getTokensByCompletion(self, limit: int = None) -> dict:
-        """
-        Gets tokens by their bonding curve completion progress.\n
-
-        Limit - Limits how many tokens in the response.
-        """
-        self.randomiseRequest()
-        if not limit:
-            limit = 50
-        elif limit > 50:
-            return "Limit cannot be above 50."
-
-        url = f"{self.BASE_URL}/v1/rank/sol/pump?limit={limit}&orderby=progress&direction=desc&pump=true"
-
-        request = self.sendRequest.get(url, headers=self.headers)
-
-        jsonResponse = request.json()['data']
-
-        return jsonResponse
-    
-    def findSnipedTokens(self, size: int = None) -> dict:
-        """
-        Gets a list of tokens that have been sniped.\n
-
-        Size - The amount of tokens in the response
-        """
-        self.randomiseRequest()
-        if not size:
-            size = 10
-        elif size > 39:
-            return "Size cannot be more than 39"
-        
-        url = f"{self.BASE_URL}/v1/signals/sol/snipe_new?size={size}&is_show_alert=false&featured=false"
-
         request = self.sendRequest.get(url, headers=self.headers)
 
         jsonResponse = request.json()['data']
@@ -188,7 +154,7 @@ class gmgn:
         Get the current gas fee price.
         """
         self.randomiseRequest()
-        url = f"{self.BASE_URL}/v1/chains/sol/gas_price"
+        url = f"{self.BASE_URL}/api/v1/gas_price/sol"
 
         request = self.sendRequest.get(url, headers=self.headers)
 
@@ -204,7 +170,7 @@ class gmgn:
         if not contractAddress:
             return "You must input a contract address."
         
-        url = f"{self.BASE_URL}/v1/sol/tokens/realtime_token_price?address={contractAddress}"
+        url = f"{self.BASE_URL}/defi/quotation/v1/sol/tokens/realtime_token_price?address={contractAddress}"
 
         request = self.sendRequest.get(url, headers=self.headers)
 
@@ -220,23 +186,7 @@ class gmgn:
         if not contractAddress:
             return "You must input a contract address."
         
-        url = f"{self.BASE_URL}/v1/tokens/top_buyers/sol/{contractAddress}"
-
-        request = self.sendRequest.get(url, headers=self.headers)
-
-        jsonResponse = request.json()['data']
-
-        return jsonResponse
-
-    def getSecurityInfo(self, contractAddress: str = None) -> dict:
-        """
-        Gets security info about the token.
-        """
-        self.randomiseRequest()
-        if not contractAddress:
-            return "You must input a contract address."
-        
-        url = f"{self.BASE_URL}/v1/tokens/security/sol/{contractAddress}"
+        url = f"{self.BASE_URL}/defi/quotation/v1/tokens/top_buyers/sol/{contractAddress}"
 
         request = self.sendRequest.get(url, headers=self.headers)
 
@@ -285,3 +235,34 @@ class gmgn:
 
         return jsonResponse
     
+    def getTopTraders(self, contractAddress: str) -> dict:
+        """
+        Get the top traders of a token.
+        """
+        self.randomiseRequest()
+        if not contractAddress:
+            return "You must input a contract address."
+        
+        url = f"{self.BASE_URL}/vas/api/v1/token_traders/sol/{contractAddress}"
+
+        request = self.sendRequest.get(url, headers=self.headers)
+
+        jsonResponse = request.json()['data']['list']
+
+        return jsonResponse
+    
+    def getTopHolders(self, contractAddress: str) -> dict:
+        """
+        Get the top holders of a token.
+        """
+        self.randomiseRequest()
+        if not contractAddress:
+            return "You must input a contract address."
+        
+        url = f"{self.BASE_URL}/vas/api/v1/token_holders/sol/{contractAddress}"
+
+        request = self.sendRequest.get(url, headers=self.headers)
+
+        jsonResponse = request.json()['data']
+
+        return jsonResponse
